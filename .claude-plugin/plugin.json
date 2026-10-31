@@ -1,0 +1,27 @@
+{
+  "name": "release-notes",
+  "version": "0.1.0",
+  "description": "Compiles release notes per tenant (client, product, BU, OU) from a tracker, a deploy signal and email or chat. Every line is cited, every run drafts to the owner first, and nothing sends without the owner's in-session approval. A router holds the model gate and gates G0-G9; a local MCP server and a send-gate hook enforce the checks in code.",
+  "author": {
+    "name": "Sayandip Bagchi"
+  },
+  "license": "MIT",
+  "keywords": [
+    "release-notes",
+    "changelog",
+    "jira",
+    "multi-tenant",
+    "grounding",
+    "evals",
+    "scheduled"
+  ],
+  "mcpServers": {
+    "rn-harness": {
+      "command": "python3",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/rn-harness/server.py"],
+      "env": {
+        "CLAUDE_PLUGIN_ROOT": "${CLAUDE_PLUGIN_ROOT}"
+      }
+    }
+  }
+}

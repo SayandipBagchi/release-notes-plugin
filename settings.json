@@ -1,0 +1,84 @@
+{
+  "release-notes": {
+    "defaultTenant": null,
+    "tenantResolution": "from the request or the scheduled task prompt; never defaulted",
+    "modelGate": {
+      "minimum": "Opus",
+      "askModel": true,
+      "askPlanVsDirect": true,
+      "refuseBelow": true
+    },
+    "releaseDefinitionRequired": true,
+    "releaseDefinitions": [
+      "fixversion_released",
+      "deploy_tag",
+      "done_in_window"
+    ],
+    "audienceDefault": "internal",
+    "approval": {
+      "approver": "tenant owner (config.json owner.email)",
+      "boundTo": "run hash",
+      "inSessionOnly": true,
+      "notApproval": [
+        "silence",
+        "an earlier session",
+        "a sheet or comment",
+        "approval of a different draft"
+      ]
+    },
+    "sendPolicy": {
+      "previewEveryRun": true,
+      "recipientsFrom": "tenants/<name>/config.json",
+      "readBackAfterSend": true,
+      "viaChrome": false,
+      "pendingSendTtlMinutes": 30,
+      "channels": [
+        "email",
+        "slack",
+        "teams"
+      ]
+    },
+    "sendGate": {
+      "toolPatterns": [
+        "send",
+        "reply",
+        "forward",
+        "post_?message",
+        "chat_?message",
+        "channel_?message",
+        "publish"
+      ],
+      "matchMode": "case-insensitive search on the tool name",
+      "singleUse": true,
+      "bodyMustMatchApprovedDraft": true,
+      "enforcesOnlyWhile": "a run is active (run_start) or a send is pending"
+    },
+    "autoSend": {
+      "defaultEnabled": false,
+      "earnedAfterCleanRuns": 3,
+      "revokeOn": [
+        "owner edit",
+        "gate failure"
+      ]
+    },
+    "chrome": {
+      "readOnly": true,
+      "checkAccountHint": true,
+      "scheduledRequiresLocalComputer": true
+    },
+    "grounding": {
+      "minCitationsPerLine": 1,
+      "t3CanBeReleased": false
+    },
+    "humanise": {
+      "factLock": true,
+      "onEntityDiff": "revert to pre-humanise draft and flag",
+      "maxPatternHitsPer500Words": 2
+    },
+    "session": {
+      "offerNewSessionAfterPrompts": 8,
+      "endWithCapsule": true,
+      "offerSkillEnhancementMd": true
+    }
+  }
+}

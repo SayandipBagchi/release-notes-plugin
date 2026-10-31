@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rn-harness/draft.schema.json",
+  "title": "Release-notes draft",
+  "description": "Draft compiled for one tenant and window. Every line cites evidence ids (checked by citation_resolve); run_hash comes from hash_run over the rendered text, recipients and subject.",
+  "type": "object",
+  "properties": {
+    "tenant": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$"
+    },
+    "window": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "subject": {
+      "type": "string"
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sections": {
+      "type": "object",
+      "properties": {
+        "released": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line_id": {
+                "type": "string"
+              },
+              "item_key": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "tier": {
+                "enum": [
+                  "T1",
+                  "T2",
+                  "T3",
+                  "none"
+                ]
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "line_id",
+              "text",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "pending": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line_id": {
+                "type": "string"
+              },
+              "item_key": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "tier": {
+                "enum": [
+                  "T1",
+                  "T2",
+                  "T3",
+                  "none"
+                ]
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "line_id",
+              "text",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "mentioned": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "line_id": {
+                "type": "string"
+              },
+              "item_key": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "tier": {
+                "enum": [
+                  "T1",
+                  "T2",
+                  "T3",
+                  "none"
+                ]
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "line_id",
+              "text",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "released",
+        "pending",
+        "mentioned"
+      ],
+      "additionalProperties": false
+    },
+    "carried_over": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "from_window_start": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_key"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "held": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_key": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_key",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "completeness": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "complete",
+              "partial",
+              "unknown"
+            ]
+          },
+          "fetched": {
+            "type": "integer"
+          },
+          "reported_total": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rendered": {
+      "type": "string"
+    },
+    "run_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "tenant",
+    "run_id",
+    "window",
+    "subject",
+    "sections"
+  ],
+  "additionalProperties": false
+}

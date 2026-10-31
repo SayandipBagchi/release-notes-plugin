@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rn-harness/config.schema.json",
+  "title": "Tenant config (tenants/<slug>/config.json)",
+  "description": "Documentation only; validation is hand-written in tools/config.py, which also enforces the cross-field rules listed in $comment.",
+  "$comment": "Cross-field: tenant == folder name; deploy.kind none only with primary done_in_window; primary deploy_tag needs github_release|gitlab_release; fortnightly needs anchorDate; delivery.channel email needs >=1 email recipient; autoSend.enabled needs clean_run_count >= earnedAfterCleanRuns; template/voice files must exist; audience external warns.",
+  "type": "object",
+  "properties": {
+    "tenant": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "org": {
+          "type": "string"
+        },
+        "client": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "bu": {
+          "type": "string"
+        },
+        "ou": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "org",
+        "product"
+      ],
+      "additionalProperties": false
+    },
+    "owner": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "previewTo": {
+          "type": "string",
+          "description": "Preview target: email or '<slack|teams>:<id>'. Default owner.email.",
+          "pattern": "^((slack|teams):\\S+|[^@\\s]+@[^@\\s]+\\.[^@\\s]+)$"
+        }
+      },
+      "required": [
+        "email"
+      ],
+      "additionalProperties": false
+    },
+    "audience": {
+      "enum": [
+        "internal",
+        "external"
+      ]
+    },
+    "releaseDefinition": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "enum": [
+            "fixversion_released",
+            "deploy_tag",
+            "done_in_window"
+          ]
+        },
+        "doneStatuses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "pendingLabel": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "primary",
+        "doneStatuses"
+      ],
+      "additionalProperties": false
+    },
+    "window": {
+      "type": "object",
+      "properties": {
+        "tz": {
+          "type": "string",
+          "description": "IANA zone"
+        },
+        "cadence": {
+          "enum": [
+            "weekly",
+            "fortnightly",
+            "monthly",
+            "on_demand"
+          ]
+        },
+        "anchor": {
+          "type": "string",
+          "pattern": "^((MON|TUE|WED|THU|FRI|SAT|SUN)|(0[1-9]|1[0-9]|2[0-8])) ([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "anchorDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "backfillRange": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string"
+                },
+                "end": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "tz",
+        "cadence"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "object",
+      "properties": {
+        "tracker": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "jira",
+                "linear",
+                "ado"
+              ]
+            },
+            "mode": {
+              "enum": [
+                "mcp",
+                "chrome"
+              ]
+            },
+            "projects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "components": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "include": {
+              "type": "object",
+              "properties": {
+                "creators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "labels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "exclude": {
+              "type": "object",
+              "properties": {
+                "labels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "creators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            },
+            "jqlExtra": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "mode",
+            "projects"
+          ],
+          "additionalProperties": false
+        },
+        "deploy": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "github_release",
+                "gitlab_release",
+                "jira_fixversion",
+                "none"
+              ]
+            },
+            "mode": {
+              "enum": [
+                "mcp",
+                "chrome"
+              ]
+            },
+            "repos": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        "comms": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "outlook",
+                  "gmail",
+                  "slack",
+                  "teams"
+                ]
+              },
+              "mode": {
+                "enum": [
+                  "mcp",
+                  "chrome"
+                ]
+              },
+              "accountHint": {
+                "type": "string"
+              },
+              "include": {
+                "type": "object",
+                "properties": {
+                  "subject": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "senders": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "folders": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "channels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "headers": {
+                    "type": "object"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              },
+              "exclude": {
+                "type": "object",
+                "properties": {
+                  "subject": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "senders": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "kind",
+              "mode"
+            ],
+            "additionalProperties": false,
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "chrome"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "accountHint"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "tracker",
+        "deploy"
+      ],
+      "additionalProperties": false
+    },
+    "mappingRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "match": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "match"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "conflictPolicy": {
+      "enum": [
+        "hold"
+      ]
+    },
+    "template": {
+      "type": "string"
+    },
+    "voice": {
+      "type": "string"
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "type": "string",
+            "pattern": "^(slack|teams):\\S+$"
+          }
+        ]
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "enum": [
+            "email",
+            "slack",
+            "teams"
+          ],
+          "description": "'doc' delivery is v2 and rejected."
+        },
+        "connector": {
+          "type": "string"
+        },
+        "subjectPattern": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "channel",
+        "connector",
+        "subjectPattern"
+      ],
+      "additionalProperties": false
+    },
+    "autoSend": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "earnedAfterCleanRuns": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "enabled",
+        "earnedAfterCleanRuns"
+      ],
+      "additionalProperties": false
+    },
+    "purity": {
+      "type": "object",
+      "properties": {
+        "terms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "terms"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "tenant",
+    "classification",
+    "owner",
+    "audience",
+    "releaseDefinition",
+    "window",
+    "sources",
+    "mappingRules",
+    "recipients",
+    "delivery",
+    "autoSend"
+  ],
+  "additionalProperties": false
+}

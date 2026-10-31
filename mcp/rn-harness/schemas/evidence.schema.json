@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rn-harness/evidence.schema.json",
+  "title": "Evidence store line (runs/<run_id>/evidence.jsonl)",
+  "description": "One JSON object per line. id = source:native_id:first 8 hex of sha256 over the canonical JSON of record.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[^:]+:.+:[0-9a-f]{8}$"
+    },
+    "record": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^[^:]+$"
+        },
+        "native_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "native_id"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "record"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "record": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "pattern": "^[^:]+$"
+        },
+        "native_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "source",
+        "native_id"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

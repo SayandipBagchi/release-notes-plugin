@@ -1,0 +1,7 @@
+evals/results/
+tenants/*/runs/
+__pycache__/
+*.pyc
+*.local.*
+.env
+.DS_Store

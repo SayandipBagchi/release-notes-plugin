@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rn-harness/template.schema.json",
+  "title": "Release-notes template structure",
+  "description": "Structure a tenant template.md must express: ordered sections, their headings and empty-state text. Placeholders in braces are filled from the draft.",
+  "type": "object",
+  "properties": {
+    "subjectPattern": {
+      "type": "string"
+    },
+    "header": {
+      "type": "string"
+    },
+    "footer": {
+      "type": "string"
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "enum": [
+              "released",
+              "pending",
+              "mentioned",
+              "carried_over",
+              "held"
+            ]
+          },
+          "heading": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "emptyText": {
+            "type": "string"
+          },
+          "lineFormat": {
+            "type": "string",
+            "description": "e.g. '- {text} ({item_key})'"
+          }
+        },
+        "required": [
+          "id",
+          "heading"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "placeholders": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "product",
+          "org",
+          "window_start",
+          "window_end",
+          "run_id",
+          "owner_name"
+        ]
+      }
+    }
+  },
+  "required": [
+    "sections"
+  ],
+  "additionalProperties": false
+}

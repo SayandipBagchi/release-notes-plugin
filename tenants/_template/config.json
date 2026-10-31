@@ -1,0 +1,52 @@
+{
+  "tenant": "<tenant-slug>",
+  "classification": {
+    "org": "<org>",
+    "client": "<client>",
+    "product": "<product>",
+    "bu": "<business-unit>",
+    "ou": "<operating-unit>"
+  },
+  "owner": {"name": "<owner name>", "email": "<owner@acme.example>"},
+  "audience": "internal",
+  "releaseDefinition": {
+    "primary": "fixversion_released",
+    "doneStatuses": ["Done", "Closed", "Resolved"],
+    "pendingLabel": "Completed, pending release"
+  },
+  "window": {
+    "tz": "Europe/London",
+    "cadence": "weekly",
+    "anchor": "MON 00:00",
+    "anchorDate": null,
+    "backfillRange": null
+  },
+  "sources": {
+    "tracker": {
+      "kind": "jira",
+      "mode": "mcp",
+      "projects": ["<PROJECT_KEY>"],
+      "components": [],
+      "include": {"creators": [], "labels": []},
+      "exclude": {"labels": ["internal-only"], "creators": []},
+      "jqlExtra": ""
+    },
+    "deploy": {"kind": "jira_fixversion", "mode": "mcp", "repos": []},
+    "comms": [
+      {
+        "kind": "outlook",
+        "mode": "mcp",
+        "include": {"subject": ["release", "deployed"], "senders": [], "folders": [], "channels": [], "headers": {}},
+        "exclude": {"subject": [], "senders": []}
+      }
+    ]
+  },
+  "mappingRules": [{"match": {"jira.project": "<PROJECT_KEY>"}}],
+  "conflictPolicy": "hold",
+  "template": "template.md",
+  "voice": "voice.md",
+  "recipients": [],
+  "delivery": {"channel": "email", "connector": "<mail connector>", "subjectPattern": "Release notes: {product} {window_start} to {window_end}"},
+  "autoSend": {"enabled": false, "earnedAfterCleanRuns": 3},
+  "purity": {"terms": []}
+}

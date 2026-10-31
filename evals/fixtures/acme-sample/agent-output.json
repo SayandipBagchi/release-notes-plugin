@@ -1,0 +1,14 @@
+{
+  "items": [
+    {"key": "ACME-101", "section": "released", "evidence_ids": ["jira:ACME-101:1a2b3c4d"], "line": "You can now freeze your card from the app (ACME-101, cards-2026.10.2)."},
+    {"key": "ACME-102", "section": "released", "evidence_ids": ["jira:ACME-102:2b3c4d5e"], "line": "Statement PDFs now show the minimum payment (ACME-102)."},
+    {"key": "ACME-104", "section": "pending", "evidence_ids": ["jira:ACME-104:3c4d5e6f"], "line": "Credit limit increase eligibility check is complete and waiting for release (ACME-104)."},
+    {"key": "ACME-105", "section": "released", "evidence_ids": ["jira:ACME-105:4d5e6f70", "outlook:msg-881:5e6f7081"], "line": "Declined payments now trigger a push notification (ACME-105, cards-2026.10.3)."},
+    {"key": "ACME-106", "section": "mentioned", "evidence_ids": ["outlook:msg-902:6f708192"], "line": "Card replacement fee copy was updated (ACME-106)."}
+  ],
+  "humanise": {
+    "before": "Released on 22 Oct 2026 in cards-2026.10.2: ACME-101 card freeze, ACME-102 statement minimum payment. Released on 25 Oct 2026 in cards-2026.10.3: ACME-105 declined-payment push for 100% of customers.",
+    "after": "On 22 Oct 2026 we shipped cards-2026.10.2 with card freeze (ACME-101) and the minimum payment on statements (ACME-102). On 25 Oct 2026, cards-2026.10.3 added a push for declined payments (ACME-105), live for 100% of customers."
+  },
+  "lines_uncited": 0
+}

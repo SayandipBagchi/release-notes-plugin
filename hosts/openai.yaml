@@ -1,0 +1,24 @@
+# Optional UI metadata for other hosts. Not required for any skill's behaviour.
+author: "Sayandip Bagchi"
+skills:
+  - name: release-notes
+    interface:
+      display_name: "Release notes"
+      short_description: "Route, gate and protect release-notes work"
+      default_prompt: "Use $release-notes to draft this window's release notes for my tenant."
+    policy:
+      allow_implicit_invocation: true
+  - name: tenant-onboard
+    interface:
+      display_name: "Set up a tenant"
+      short_description: "First-run interview: sources, window, template, voice, recipients, cadence"
+      default_prompt: "Use $tenant-onboard to set up release notes for a new team."
+    policy:
+      allow_implicit_invocation: true
+  - name: trace
+    interface:
+      display_name: "Trace a line"
+      short_description: "Show the evidence behind any line of a note"
+      default_prompt: "Use $trace to show where this line came from."
+    policy:
+      allow_implicit_invocation: true

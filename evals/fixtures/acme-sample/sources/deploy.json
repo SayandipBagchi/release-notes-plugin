@@ -1,0 +1,9 @@
+{
+  "kind": "jira_fixversion",
+  "versions": [
+    {"name": "cards-2026.10.1", "released": true, "release_date": "2026-10-09"},
+    {"name": "cards-2026.10.2", "released": true, "release_date": "2026-10-22"},
+    {"name": "cards-2026.10.3", "released": true, "release_date": "2026-10-25"},
+    {"name": "cards-2026.11.1", "released": false, "release_date": null}
+  ]
+}

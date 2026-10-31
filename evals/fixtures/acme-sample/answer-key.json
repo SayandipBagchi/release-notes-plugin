@@ -1,0 +1,12 @@
+{
+  "tenant": "acme-cards",
+  "window": {"start": "2026-10-19T00:00:00+01:00", "end": "2026-10-26T00:00:00+00:00"},
+  "note": "Human answer key. ACME-106 shipped in an earlier window and is excluded.",
+  "items": [
+    {"key": "ACME-101", "section": "released"},
+    {"key": "ACME-102", "section": "released"},
+    {"key": "ACME-103", "section": "released"},
+    {"key": "ACME-104", "section": "pending"},
+    {"key": "ACME-105", "section": "released"}
+  ]
+}

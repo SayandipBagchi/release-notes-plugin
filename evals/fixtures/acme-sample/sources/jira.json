@@ -1,0 +1,11 @@
+{
+  "total": 6,
+  "issues": [
+    {"key": "ACME-101", "summary": "Card freeze from the app", "status": "Done", "status_changed_at": "2026-10-20T10:12:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.10.2", "released": true, "release_date": "2026-10-22"}], "url": "https://acme.example/browse/ACME-101"},
+    {"key": "ACME-102", "summary": "Statement PDF shows minimum payment", "status": "Done", "status_changed_at": "2026-10-21T15:40:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.10.2", "released": true, "release_date": "2026-10-22"}], "url": "https://acme.example/browse/ACME-102"},
+    {"key": "ACME-103", "summary": "Direct debit date change limit raised to 3 per year", "status": "Closed", "status_changed_at": "2026-10-19T09:05:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.10.2", "released": true, "release_date": "2026-10-22"}], "url": "https://acme.example/browse/ACME-103"},
+    {"key": "ACME-104", "summary": "Credit limit increase eligibility check", "status": "Done", "status_changed_at": "2026-10-23T11:00:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.11.1", "released": false, "release_date": null}], "url": "https://acme.example/browse/ACME-104"},
+    {"key": "ACME-105", "summary": "Push notification for declined payments", "status": "Done", "status_changed_at": "2026-10-24T16:30:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.10.3", "released": true, "release_date": "2026-10-25"}], "url": "https://acme.example/browse/ACME-105"},
+    {"key": "ACME-106", "summary": "Card replacement fee copy update", "status": "Done", "status_changed_at": "2026-10-08T12:00:00+01:00", "labels": [], "fix_versions": [{"name": "cards-2026.10.1", "released": true, "release_date": "2026-10-09"}], "url": "https://acme.example/browse/ACME-106"}
+  ]
+}
